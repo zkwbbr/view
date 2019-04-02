@@ -102,7 +102,7 @@ class View
         return $this->template;
     }
 
-    public function setTemplate(string $template)
+    public function setTemplate(?string $template)
     {
         $this->template = $template;
         return $this;
