@@ -26,8 +26,7 @@ class ViewTest extends TestCase
             ->setData($this->data)
             ->setLayoutFile('sampleLayout')
             ->setTemplateVar('myTemplateVar')
-            ->setTemplateDir(__DIR__ . '/testTemplates/')
-            ->setTemplate('sampleTemplate');
+            ->setTemplateDir(__DIR__ . '/testTemplates/');
     }
 
     public function tearDown(): void
@@ -37,6 +36,8 @@ class ViewTest extends TestCase
 
     public function testViewWithLayout()
     {
+        $this->view->setTemplate('sampleTemplate');
+
         $output = $this->view->generatedView();
 
         $expected = '<html><body><h1>' . $this->data['foo'] . '</h1>' . $this->data['bar'] . '</body></html>';
@@ -46,11 +47,23 @@ class ViewTest extends TestCase
 
     public function testViewWithNoLayout()
     {
+        $this->view->setTemplate('sampleTemplate');
         $this->view->setUseLayout(false);
 
         $output = $this->view->generatedView();
 
         $expected = '<h1>' . $this->data['foo'] . '</h1>';
+
+        $this->assertEquals($expected, $output);
+    }
+
+    public function testViewWithAutoDetectTemplate()
+    {
+        $this->view->setBacktraceIndex(0);
+
+        $output = $this->view->generatedView();
+
+        $expected = '<html><body><h1>' . $this->data['foo'] . '</h1>' . $this->data['bar'] . '</body></html>';
 
         $this->assertEquals($expected, $output);
     }

@@ -56,6 +56,14 @@ class View
      */
     private $templateVar;
 
+    /**
+     * Backtrace index to auto-detect template file relative to where render()
+     * is called
+     *
+     * @var int
+     */
+    private $backtraceIndex;
+
     public function getData(): array
     {
         return $this->data;
@@ -89,7 +97,7 @@ class View
         return $this;
     }
 
-    public function getTemplate(): string
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
@@ -133,6 +141,35 @@ class View
         return $this;
     }
 
+    public function getBacktraceIndex(): int
+    {
+        return $this->backtraceIndex;
+    }
+
+    public function setBacktraceIndex(int $backtraceIndex)
+    {
+        $this->backtraceIndex = $backtraceIndex;
+        return $this;
+    }
+
+    /**
+     * Returns function name where render() based on backtrace index
+     *
+     * It's then assumed that the function name is the template name
+     *
+     * @param int $backtraceIndex
+     * @return string
+     */
+    public function autoDetectedTemplate(int $backtraceIndex): string
+    {
+        $bt = debug_backtrace();
+
+        $class = explode('\\', $bt[$backtraceIndex]['class']);
+        $class = array_pop($class);
+
+        return $class . ucfirst($bt[$backtraceIndex]['function']);
+    }
+
     /**
      * Generate the template view based from the setter methods
      *
@@ -146,15 +183,8 @@ class View
         $template = $this->getTemplate();
 
         // auto detect template file
-        if (is_null($template)) {
-
-            $a = debug_backtrace();
-
-            $class = explode('\\', $a[2]['class']);
-            $class = array_pop($class);
-
-            $template = $class . ucfirst($a[2]['function']);
-        }
+        if (is_null($template))
+            $template = $this->autoDetectedTemplate($this->getBacktraceIndex());
 
         // use layout or not
         if ($this->getUseLayout()) {
