@@ -1,0 +1,23 @@
+{
+    "name": "zkwbbr/view",
+    "type": "library",
+    "description": "Display template file inside a layout file using plain PHP",
+    "keywords": ["php", "view", "template"],
+    "authors": [
+        {
+            "name": "zkwbbr/view contributors",
+            "homepage": "https://github.com/zkwbbr/view/graphs/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Zkwbbr\\View\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}

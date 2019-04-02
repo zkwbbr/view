@@ -1,0 +1,1 @@
+<html><body><?=$myTemplateVar?><?=$bar?></body></html>
