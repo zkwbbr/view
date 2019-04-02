@@ -6,7 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Zkwbbr\View;
 
 /**
- * Note: You must run these tests one by one because the methods uses output
+ * Note: Don't remove the @runInSeparateProcess annotation in the methods or
+ * you must run these tests one by one because the methods uses output
  * buffering functions which is causing issues in PHPunit if they are run
  * in one go
  */
@@ -34,6 +35,9 @@ class ViewTest extends TestCase
 
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testViewWithLayout()
     {
         $this->view->setTemplate('sampleTemplate');
@@ -45,6 +49,9 @@ class ViewTest extends TestCase
         $this->assertEquals($expected, $output);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testViewWithNoLayout()
     {
         $this->view->setTemplate('sampleTemplate');
@@ -57,6 +64,9 @@ class ViewTest extends TestCase
         $this->assertEquals($expected, $output);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testViewWithAutoDetectTemplate()
     {
         $this->view->setBacktraceIndex(0);
