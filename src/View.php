@@ -160,7 +160,7 @@ class View
      * @param int $backtraceIndex
      * @return string
      */
-    public function autoDetectedTemplate(int $backtraceIndex): string
+    private function autoDetectedTemplate(int $backtraceIndex): string
     {
         $bt = debug_backtrace();
 
