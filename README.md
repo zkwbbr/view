@@ -51,6 +51,7 @@ $view = (new View\View)
     ->setTemplateVar('templateContent')
     ->setTemplateDir(__DIR__ . '/myTemplates/')
     ->setTemplate('myView')
+    ->setBacktraceIndex(0) // # of nested calls relative to render(); for auto-detecting template file (try 0 first then increment until you find it)
     ->render();
 ```
 
