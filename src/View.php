@@ -64,6 +64,16 @@ class View
      */
     private $backtraceIndex;
 
+    /**
+     * Word to strip from template file.
+     *
+     * E.g., If the autodetected file is 'UserControllerIndex' and the word to
+     * strip is 'Controller', the final autodetected file will be UserIndex
+     *
+     * @var string
+     */
+    private $stripStringFromTemplateFile = null;
+
     public function getData(): array
     {
         return $this->data;
@@ -152,6 +162,17 @@ class View
         return $this;
     }
 
+    public function getStripStringFromTemplateFile(): ?string
+    {
+        return $this->stripStringFromTemplateFile;
+    }
+
+    public function setStripStringFromTemplateFile(string $stripStringFromTemplateFile)
+    {
+        $this->stripStringFromTemplateFile = $stripStringFromTemplateFile;
+        return $this;
+    }
+
     /**
      * Returns function name where render() based on backtrace index
      *
@@ -167,7 +188,12 @@ class View
         $class = explode('\\', $bt[$backtraceIndex]['class']);
         $class = array_pop($class);
 
-        return $class . ucfirst($bt[$backtraceIndex]['function']);
+        $template = $class . ucfirst($bt[$backtraceIndex]['function']);
+
+        if ($this->getStripStringFromTemplateFile())
+            $template = str_replace($this->getStripStringFromTemplateFile(), '', $template);
+
+        return $template;
     }
 
     /**
@@ -223,4 +249,5 @@ class View
 
         exit;
     }
+
 }

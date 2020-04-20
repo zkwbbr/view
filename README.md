@@ -52,7 +52,8 @@ $view = (new View\View)
     ->setTemplateDir(__DIR__ . '/myTemplates/')
     ->setTemplate('myView')
     ->setBacktraceIndex(0) // # of nested calls relative to render(); for auto-detecting template file (try 0 first then increment until you find it)
-    ->render();
+    ->setStripStringFromTemplateFile('foo') // optional, remove string from template file (e.g., if your controller is the basis for auto template detection e.g., UserControllerIndex, and your actual template file is UserIndex, use 'Controller' as value here)
+    ->render(); // you get also use generatedView() to return the generated view instead of outputting it
 ```
 
 ## Expected output

@@ -77,4 +77,19 @@ class ViewTest extends TestCase
 
         $this->assertEquals($expected, $output);
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testStripStringFromTemplateFile()
+    {
+        $this->view->setBacktraceIndex(1);
+
+        $this->view->setStripStringFromTemplateFile('Generated'); // word to remove in template file so final template file is ViewView.php
+
+        $output = $this->view->generatedView();
+
+        $this->assertStringContainsString('setStripWordFromTemplateFile', $output);
+    }
+
 }
