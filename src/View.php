@@ -183,7 +183,7 @@ class View
      */
     private function autoDetectedTemplate(int $backtraceIndex): string
     {
-        $bt = debug_backtrace();
+        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 
         $class = explode('\\', $bt[$backtraceIndex]['class']);
         $class = array_pop($class);
